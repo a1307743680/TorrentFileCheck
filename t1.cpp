@@ -73,6 +73,8 @@ int main (int argc, char ** argv) {
 		finf->path = namestr;
 		finf->len = lengthint;
 		fileinfos.push_back(finf);
+		// FILE* fp = tfopen(".\\"+namestr);
+		// cout<<"fp "<<fp<<endl;
 
 	}
 	else {
