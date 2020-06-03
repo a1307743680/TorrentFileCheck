@@ -110,6 +110,33 @@ int main (int argc, char ** argv) {
 	// std::cout<<"piece hash "<<piecehashs.size()<<endl;
 
 
+	/// 
+	auto fit = fileinfos.begin();
+	int fileoffset = 0;
+	for(int i =0; i<piecehashs.size(); i+=20) {
+		piece* p = new piece;
+		memcpy(p->hashcode.data(), piecehashs.data()+i, 20);
+		int plen = piecelen ;
+		while (plen!=0) {
+			auto fptr = (*fit);
+			if(fileoffset >= fptr->len) {
+				
+			}
+			int remainlen = fptr->len - fileoffset;
+			if(remainlen > plen) {
+				auto fpptr = new filepiece;
+				fpptr->len = plen;
+				fpptr->offset = fileoffset;
+				fpptr->file = fptr;
+				
+				fileoffset += plen;
+				plen = 0;
+
+			}
+		}
+	}
+
+
 	return 0;
 
 }
