@@ -8,7 +8,7 @@
 #include <windows.h>
 
 using namespace std;
-typedef std::array<unsigned char,20> sha1hash;
+typedef std::array<unsigned char,10> sha1hash;
 
 class fileinfo {
 public:

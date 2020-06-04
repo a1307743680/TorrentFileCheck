@@ -8,7 +8,7 @@
             "name": "(gdb) 启动",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/a",
+            "program": "${workspaceFolder}/a.exe",
             "args": ["d:\\._.myTest\\bencodeeditor\\bencodeeditor\\bencode-editor.0710x\\TESV.Skyrim_chs-Gamersky.torrent"],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",

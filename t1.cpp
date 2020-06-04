@@ -109,30 +109,36 @@ int main (int argc, char ** argv) {
 	piecehashs = spieces->bdata();
 	// std::cout<<"piece hash "<<piecehashs.size()<<endl;
 
-
+	///
+	for(int it = 0; it<piecehashs.size(); it+=10) {
+		piece* p = new piece;
+		memcpy(p->hashcode.data(), piecehashs.data()+it, 10);
+		pieces.push_back(p);
+	}
 	/// 
 	auto fit = fileinfos.begin();
 	int fileoffset = 0;
-	for(int i =0; i<piecehashs.size(); i+=20) {
-		piece* p = new piece;
-		memcpy(p->hashcode.data(), piecehashs.data()+i, 20);
-		int plen = piecelen ;
-		while (plen!=0) {
-			auto fptr = (*fit);
-			if(fileoffset >= fptr->len) {
-				
-			}
-			int remainlen = fptr->len - fileoffset;
-			if(remainlen > plen) {
-				auto fpptr = new filepiece;
-				fpptr->len = plen;
-				fpptr->offset = fileoffset;
-				fpptr->file = fptr;
-				
-				fileoffset += plen;
-				plen = 0;
+	int poffset = 0;
+	int plen = piecelen;
+	piece* pptr = nullptr;
+	filepiece* fpptr = nullptr;
+	fileinfo* fptr = nullptr;
+	for(;fit != fileinfos.end() && poffset < piecehashs.size();) {
+		// if(fit == fileinfos.end()) break;
+		// if(poffset >= piecehashs.size()) break;
+		fptr = *fit;
+		if(fileoffset >= fptr->len) {
+			fileoffset = 0;
+			fit++;
+			fptr = *fit;
+		}
+		if(plen = 0) 
+	}
 
-			}
+	for(auto it: pieces) {
+		printf("%s\n", it->hashcode.data());
+		for(auto jt: it->files) {
+			printf("  %10d %10d %s\n", jt->len, jt->offset, jt->file->path);
 		}
 	}
 
