@@ -110,34 +110,68 @@ int main (int argc, char ** argv) {
 	// std::cout<<"piece hash "<<piecehashs.size()<<endl;
 
 	///
-	for(int it = 0; it<piecehashs.size(); it+=10) {
+	for(int it = 0; it<piecehashs.size(); it+=20) {
 		piece* p = new piece;
-		memcpy(p->hashcode.data(), piecehashs.data()+it, 10);
+		memcpy(p->hashcode.data(), piecehashs.data()+it, 20);
 		pieces.push_back(p);
 	}
+
+	// for(auto it: piecehashs) {
+
+	// }
 	/// 
 	auto fit = fileinfos.begin();
+	auto pit = pieces.begin();
 	int fileoffset = 0;
 	int poffset = 0;
 	int plen = piecelen;
-	piece* pptr = nullptr;
+	piece* pptr = *pit;
 	filepiece* fpptr = nullptr;
-	fileinfo* fptr = nullptr;
-	for(;fit != fileinfos.end() && poffset < piecehashs.size();) {
-		// if(fit == fileinfos.end()) break;
-		// if(poffset >= piecehashs.size()) break;
-		fptr = *fit;
-		if(fileoffset >= fptr->len) {
-			fileoffset = 0;
+	fileinfo* fptr = *fit;
+	for(;fit!= fileinfos.end() && pit!= pieces.end();) {
+		if(fptr->len <= fileoffset) {
 			fit++;
+			fileoffset = 0;
 			fptr = *fit;
+			std::cout<<__LINE__<<endl;
+			continue;
 		}
-		if(plen = 0) 
+		if(plen ==0) {
+			pit++;
+			plen = piecelen;
+			pptr = *pit;
+			// std::cout<<__LINE__<<endl;
+			continue;
+		}
+		fpptr = new filepiece;
+		int remainlen = fptr->len - fileoffset;
+		if(remainlen >= plen) {
+			fpptr->len = plen;
+			fpptr->offset = fileoffset;
+			fileoffset += plen;
+			plen = 0;
+			fpptr->file = fptr;
+			pptr->files.push_back(fpptr);
+			std::cout<<__LINE__<<endl;
+		}
+		else {
+			fpptr->len = remainlen;
+			fpptr->offset = fileoffset;
+			fileoffset += remainlen;
+			plen = plen-remainlen;
+			fpptr->file = fptr;
+			pptr->files.push_back(fpptr);
+			// std::cout<<__LINE__<<endl;
+		}
 	}
 
+
+
 	for(auto it: pieces) {
-		printf("%s\n", it->hashcode.data());
+		printf("%X\n", (int)*it->hashcode.data());
+		
 		for(auto jt: it->files) {
+			// if(jt->file ) 
 			printf("  %10d %10d %s\n", jt->len, jt->offset, jt->file->path);
 		}
 	}

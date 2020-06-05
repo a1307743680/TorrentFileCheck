@@ -8,7 +8,7 @@
 #include <windows.h>
 
 using namespace std;
-typedef std::array<unsigned char,10> sha1hash;
+typedef std::array<unsigned char,20> sha1hash;
 
 class fileinfo {
 public:
@@ -42,6 +42,10 @@ FILE* tfopen(string fpath) {
     FILE* fp = _wfopen(filepath,L"rb");
     return fp;
     // return nullptr;
+}
+
+void hashpiece(piece* pptr) {
+    
 }
 
 #endif
