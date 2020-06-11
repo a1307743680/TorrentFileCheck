@@ -30,6 +30,8 @@ effort (for example the reengineering of a great many Capstone chips).
 */
 
 /* h files included here to make this just one file ... */
+#ifndef SHA1
+#define SHA1
 
 /* global.h */
 
@@ -190,9 +192,8 @@ void SHAInit(SHA_CTX *shsInfo)
 
    Note that this corrupts the shsInfo->data area */
 
-static void SHSTransform( digest, data )
-     UINT4 *digest, *data ;
-    {
+static void SHSTransform( UINT4 *digest, UINT4 *data )
+{
     UINT4 A, B, C, D, E;     /* Local vars */
     UINT4 eData[ 16 ];       /* Expanded data */
 
@@ -511,3 +512,5 @@ void endianTest(int *endian_ness)
 		*endian_ness = 0;
 	}
 }
+
+#endif //SHA1

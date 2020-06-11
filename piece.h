@@ -6,10 +6,11 @@
 #include <cwchar>
 #include <cstdio>
 #include <windows.h>
-
+#include "sha1.h"
 using namespace std;
 typedef std::array<unsigned char,20> sha1hash;
 
+extern int piecelen;
 class fileinfo {
 public:
     int len;
@@ -45,6 +46,7 @@ FILE* tfopen(string fpath) {
 }
 
 void hashpiece(piece* pptr) {
+    char a[piecelen];
     
 }
 
